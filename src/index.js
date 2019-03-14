@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
