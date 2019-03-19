@@ -1,9 +1,10 @@
 import React from 'react';
-import DatePicker from './DatePicker';
-import ReportItem from './ReportItem'
+import { Dropdown, Row, Col, DropdownButton, Table, InputGroup,Button,  FormControl } from 'react-bootstrap';
+import DateChooser from './DatePicker';
+import ReportItem from './ReportItem';
 
 class Calculator extends React.Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       currency: 'UAN',
@@ -12,77 +13,90 @@ class Calculator extends React.Component {
       term: 1
     };
     this.onSubmit = () => {
-        this.setState({
-          currency: 'UAN',
-          among: document.getElementById('among-of-contribution').value,
-          annualRate: document.getElementById('year-rate').value
-        });
+      this.setState({
+        currency: 'UAN',
+        among: document.getElementById('among-of-contribution').value,
+        annualRate: document.getElementById('year-rate').value,
+        term: document.getElementsByClassName('picker-input__text')[0].value
+      });
     }
   }
 
-  render(){
+  render() {
     const props = this.state;
-    return(
-      <div className="row">
-        <div className="col-md-4 calc-container">
-            <div className="row">
-                <div className="col currency">Валюта</div>
-                <div className="col dropdown curreCheckbox"></div>
-                <button className="btn btn-primary dropdown-toggle" type="button" id="currencyDropDownMenu" data-togle="dropdown" aria-haspopup="true" aria-expanded="false"> {String.fromCharCode(8372)} UAN</button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <button className="dropdown-item UAN" type="button">{String.fromCharCode(8372)}UAN</button>
-                    <button className="dropdown-item USD" type="button">{String.fromCharCode(36)}USD</button>
-                    <button className="dropdown-item EUR" type="button">{String.fromCharCode(8364)}EUR</button>
-                </div>
-            </div>
+    return (
+      <Row>
+        <Col md={4} className="calc-container">
+          <Row>
+            <Col className="col currency">Валюта</Col>
+            <DropdownButton id="dropdown-item-button" title="UAN">
+              <Dropdown.Item as="button">UAN</Dropdown.Item>
+              <Dropdown.Item as="button">USD</Dropdown.Item>
+              <Dropdown.Item as="button">EUR</Dropdown.Item>
+            </DropdownButton>
+          </Row>
 
-        <div className="row">
-      <div className="col contribution">Сумма внеску</div>
-      <div className="col input-group">
-        <input type="text" className="form-control" id="among-of-contribution"/>
-        <div className="input-group-append">
-          <span className="input-group-text">$</span>
-        </div>
-      </div>
-    </div>
+          <Row>
+            <Col className="contribution">Сумма внеску</Col>
+            <Col className="input-group">
+              <InputGroup>
+                <FormControl
+                  placeholder=""
+                  aria-label="Amount (to the nearest dollar)"
+                />
+                <InputGroup.Append>
+                  <InputGroup.Text>$</InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+            </Col>
+          </Row>
 
-    <div className="row">
-      <div className="col currency">Річна ставка</div>
-      <div className="col input-group">
-        <input type="text" className="form-control" id="year-rate"/>
-        <div className="input-group-append">
-          <span className="input-group-text">%</span>
-        </div>
-      </div>
-    </div>
+          <Row>
+            <Col className="currency">Річна ставка</Col>
+            <Col className="col input-group">
+               <InputGroup>
+                <FormControl
+                  placeholder=""
+                  aria-label="Amount (to the nearest dollar)"
+                />
+                <InputGroup.Append>
+                  <InputGroup.Text >%</InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+            </Col>
+          </Row>
 
-    <div className="row">
-    <div className="col contribution">Сумма внеску</div>
-    <DatePicker className="col"/>
-    </div>
+          <Row>
+            <Col className="contribution">Сумма внеску</Col>
+            <DateChooser className="col" />
+          </Row>
 
-    <div className="row">
-      <button type="button" className="btn btn-primary btn-lg btn-block" id="calculate" onClick={this.onSubmit}>Розрахувати</button>
-    </div>
-    </div>
-     <div className="col-md-7 table-wrapper-scroll-y content-container">
-     <table className="table table-bordered table-striped">
-         <thead>
-             <tr>
-                 <th scope="col">Дата</th>
-                 <th scope="col">Сума депозиту</th>
-                 <th scope="col">% дохід</th>
-                 <th scope="col">Дохід</th>  
-             </tr>
-         </thead>
+          <Row>
+          <Button variant="primary" block="true">Розрахувати</Button>
+          </Row>
+        </Col>
 
-         <tbody className="table-content">
-             <ReportItem {...props}/>
-          </tbody>
-     </table>
- </div>
- </div>
-)
+        <Col md={7} className="table-wrapper-scroll-y content-container">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Сума депозиту</th>
+                <th scope="col">% дохід</th>
+                <th scope="col">Дохід</th>
+              </tr>
+            </thead>
+
+            <tbody className="table-content">
+              <ReportItem {...props} />
+              <ReportItem {...props} />
+              <ReportItem {...props} />
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+
+    )
   }
 }
 

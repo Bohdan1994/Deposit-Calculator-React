@@ -1,6 +1,10 @@
 .container{ 
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   /* padding: 10px; */
+}
+
+.App .container{
+  margin-top: 2%;
 }
 
 /* #calculator-container {

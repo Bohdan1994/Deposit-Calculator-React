@@ -5,9 +5,9 @@ class ReportItem extends Component {
         const data = this.props;
         return (
         <tr>
-        <td>{data.currency}</td>
+        <td>{data.term}</td>
         <td>{data.among}</td>
-        <td>10000</td>
+        <td></td>
         <td>10000</td>
     </tr>
         );
