@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 
 class ReportItem extends Component {
     render(){
-        const data = this.props;
+        const item = this.props;
         return (
         <tr>
-        <td>{data.currency}</td>
-        <td>{data.among}</td>
-        <td>{data.term}</td>
-        <td>10000</td>
+        <td>{item.date}</td>
+        <td>{item.income.initialAmount}</td>
+        <td>{item.income.monthPercents}</td>
+        <td>{item.income.monthIncome}</td>
     </tr>
         );
 }
