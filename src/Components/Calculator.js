@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Row, Col, DropdownButton, Table, InputGroup,Button,  FormControl } from 'react-bootstrap';
+import { Dropdown, Row, Col, DropdownButton, Table, InputGroup, Button, FormControl } from 'react-bootstrap';
 import ReportItem from './ReportItem';
 import { DatePicker } from '@y0c/react-datepicker';
 import moment from 'moment';
@@ -9,11 +9,11 @@ class Calculator extends React.Component {
     super();
     this.state = {
       data: {
-      currency: 'UAN',
-      among: 0,
-      annualRate: 0,
-      date: moment().format('YYYY-M-D'),
-      percents: 0
+        currency: 'UAN',
+        among: 0,
+        annualRate: 0,
+        date: moment().format('YYYY-M-D'),
+        percents: 0
       },
       displayData: []
     };
@@ -25,11 +25,11 @@ class Calculator extends React.Component {
     }
 
     this.onSubmit = () => {
-      this.setState(() =>{
-       return {data: {...this.data}}
+      this.setState(() => {
+        return { data: { ...this.data } }
       }, toCalculate);
     }
-    
+
     this.setAmong = (e) => {
       this.data.among = e.target.value;
     }
@@ -38,12 +38,12 @@ class Calculator extends React.Component {
       this.data.annualRate = e.target.value;
     }
 
-    this.setCurrency = (e) =>{
-        this.data.currency = e.target.innerText;
+    this.setCurrency = (e) => {
+      this.data.currency = e.target.innerText;
     }
 
     this.setDate = (val) => {
-        this.data.date = val;
+      this.data.date = val;
     }
 
     function toCalculate() {
@@ -58,11 +58,11 @@ class Calculator extends React.Component {
       const monthDiff = (first, last) => moment(last).diff(first, 'month');
 
       const getMonthRate = (days) => {
-          let res = result;
-          let percentsIncome = 0;
-          let percents = 0;
-          let resultObj = {initialAmount: parseFloat(res.toFixed(2))}
-        for(let i = 1; i <= days; i++){
+        let res = result;
+        let percentsIncome = 0;
+        let percents = 0;
+        let resultObj = { initialAmount: parseFloat(res.toFixed(2)) }
+        for (let i = 1; i <= days; i++) {
           percents = ((res / 100) * rate) / 365;
           percentsIncome += percents;
           res += percents;
@@ -71,53 +71,53 @@ class Calculator extends React.Component {
         resultObj.monthIncome = parseFloat(result.toFixed(2));
         resultObj.monthPercents = parseFloat(percentsIncome.toFixed(2));
         return resultObj;
-    }
-   
-   
-    const calcResult = toCreateDisplayData(this.state.data.date);
-    this.setState({displayData: calcResult});
-    
-    function toCreateDisplayData(data){
-      let resultArr = [];
-      let term = moment(data).toObject();
+      }
 
-      const calcFirstMonth = () => {
-        const end = moment([today.years, today.months]);
-        end.date(end.daysInMonth());
-        return getMonthRate(end.date() - today.date);
-     };
-     const calcLastMonth = () => getMonthRate(term.date);
-     const numberOfMonth = monthDiff([today.years, today.months], [term.years, term.months]) + 1;
-     const getDaysInMonth = (year, month) => moment([year, month]).daysInMonth();
- 
-     for(let i = 0; i < numberOfMonth; i++) {
-       let item = {};
-       if(i == 0) {
-         item.income = calcFirstMonth();
-         item.date = moment([today.years, today.months, getDaysInMonth(today.years, today.months)]).format('D-M-YY');
-       }
-       else if(i == numberOfMonth - 1){
-         item.income = calcLastMonth();
-         item.date = moment([term.years, term.months, getDaysInMonth(term.years, term.months)]).format('D-M-YY');
-       }
-       else{
-          const daysNextMonth = moment([today.years, today.months]).add(i,'M');
-          daysNextMonth.date(daysNextMonth.daysInMonth());
-          item.income = getMonthRate(daysNextMonth.date()); 
-          item.date = moment([today.years, today.months, getDaysInMonth(today.years, today.months)]).add(i,'M').format('D-M-YY');
-        
-       }
-       resultArr.push(item); 
-     }
-     return resultArr;
-    }
-  
+
+      const calcResult = toCreateDisplayData(this.state.data.date);
+      this.setState({ displayData: calcResult });
+
+      function toCreateDisplayData(data) {
+        let resultArr = [];
+        let term = moment(data).toObject();
+
+        const calcFirstMonth = () => {
+          const end = moment([today.years, today.months]);
+          end.date(end.daysInMonth());
+          return getMonthRate(end.date() - today.date);
+        };
+        const calcLastMonth = () => getMonthRate(term.date);
+        const numberOfMonth = monthDiff([today.years, today.months], [term.years, term.months]) + 1;
+        const getDaysInMonth = (year, month) => moment([year, month]).daysInMonth();
+
+        for (let i = 0; i < numberOfMonth; i++) {
+          let item = {};
+          if (i == 0) {
+            item.income = calcFirstMonth();
+            item.date = moment([today.years, today.months, getDaysInMonth(today.years, today.months)]).format('D-M-YY');
+          }
+          else if (i == numberOfMonth - 1) {
+            item.income = calcLastMonth();
+            item.date = moment([term.years, term.months, getDaysInMonth(term.years, term.months)]).format('D-M-YY');
+          }
+          else {
+            const daysNextMonth = moment([today.years, today.months]).add(i, 'M');
+            daysNextMonth.date(daysNextMonth.daysInMonth());
+            item.income = getMonthRate(daysNextMonth.date());
+            item.date = moment([today.years, today.months, getDaysInMonth(today.years, today.months)]).add(i, 'M').format('D-M-YY');
+
+          }
+          resultArr.push(item);
+        }
+        return resultArr;
+      }
+
     }
   }
 
   render() {
     let props = this.state;
-    const reportItems =  this.state.displayData;
+    const reportItems = this.state.displayData;
     return (
       <Row>
         <Col md={4} className="calc-container">
@@ -126,7 +126,7 @@ class Calculator extends React.Component {
             <DropdownButton id="dropdown-item-button" title={this.state.data.currency}>
               <Dropdown.Item as="button" onClick={this.setCurrency}>UAN</Dropdown.Item>
               <Dropdown.Item as="button" onClick={this.setCurrency}>USD</Dropdown.Item>
-              <Dropdown.Item as="button"  onClick={this.setCurrency}>EUR</Dropdown.Item>
+              <Dropdown.Item as="button" onClick={this.setCurrency}>EUR</Dropdown.Item>
             </DropdownButton>
           </Row>
 
@@ -149,7 +149,7 @@ class Calculator extends React.Component {
           <Row>
             <Col className="currency">Річна ставка</Col>
             <Col className="input-group">
-               <InputGroup>
+              <InputGroup>
                 <FormControl
                   placeholder=""
                   aria-label=""
@@ -164,11 +164,11 @@ class Calculator extends React.Component {
 
           <Row>
             <Col className="contribution">Термін</Col>
-            <DatePicker onChange={this.setDate}/>
+            <DatePicker onChange={this.setDate} />
           </Row>
 
           <Row>
-          <Button variant="primary" block="true" onClick={this.onSubmit}>Розрахувати</Button>
+            <Button variant="primary" block="true" onClick={this.onSubmit}>Розрахувати</Button>
           </Row>
         </Col>
 
@@ -184,7 +184,7 @@ class Calculator extends React.Component {
             </thead>
 
             <tbody className="table-content">
-           { reportItems.map((el) =>  <ReportItem {...el} /> )}
+              {reportItems.map((el) => <ReportItem {...el} />)}
             </tbody>
           </Table>
         </Col>
@@ -193,6 +193,4 @@ class Calculator extends React.Component {
     )
   }
 }
-
-
 export default Calculator;
